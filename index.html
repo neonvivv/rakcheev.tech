@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakcheev.tech</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Swiper.js for Carousel -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles to apply fonts and colors from guidelines */
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Roboto', sans-serif;
+        }
+        .font-accent {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .bg-element {
+            background-color: #111111;
+        }
+        .text-secondary {
+            color: #D3D3D3;
+        }
+        /* Style for carousel to show parts of next/prev slides */
+        .main-carousel .swiper-slide {
+            transition: transform 0.3s ease-in-out;
+            opacity: 0.5;
+            transform: scale(0.85);
+        }
+        .main-carousel .swiper-slide-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        /* Carousel pagination bullets */
+        .swiper-pagination-bullet {
+            background-color: #D3D3D3 !important;
+            opacity: 0.5 !important;
+        }
+        .swiper-pagination-bullet-active {
+            opacity: 1 !important;
+        }
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .header-glass {
+            backdrop-filter: url(#frosted);
+            -webkit-backdrop-filter: url(#frosted);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- HEADER -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Site Switcher -->
+            <div class="relative">
+                <button id="site-switcher-button" class="flex items-center gap-2 text-lg font-accent">
+                    rakcheev.tech
+                    <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <!-- Site Switcher Dropdown -->
+                <div id="site-switcher-dropdown" class="hidden absolute top-full left-0 mt-2 w-72 bg-black border border-zinc-800 rounded-lg p-2 space-y-1">
+                    <a href="#" class="flex items-center justify-between p-3 hover:bg-zinc-800 rounded-md transition-colors">
+                        <div>
+                            <p class="font-accent">rakcheev.tech</p>
+                            <p class="text-sm text-secondary">страница проектов</p>
+                        </div>
+                        <svg width="32" height="32" viewBox="0 0 230 125" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-8 h-auto">
+                            <path d="M0 125H34.7971L88.7033 0H53.5206L0 125Z" fill="white"/>
+                            <path d="M104.219 62.5C104.219 47.693 109.4 34.0887 118.059 23.3799L134.793 43.4613C131.461 49.0356 129.548 55.5457 129.548 62.5C129.548 83.116 146.365 99.8286 167.109 99.8286C171.605 99.8286 175.917 99.0436 179.912 97.6041L196.65 117.69C187.843 122.356 177.787 125 167.109 125C132.376 125 104.219 97.0178 104.219 62.5Z" fill="white"/>
+                            <path d="M216.155 101.626C224.817 90.9161 230 77.3096 230 62.5C230 27.9822 201.843 0 167.109 0C156.429 0 146.371 2.64567 137.562 7.31352L154.299 27.3985C158.297 25.9573 162.611 25.1714 167.109 25.1714C187.854 25.1714 204.671 41.884 204.671 62.5C204.671 69.457 202.756 75.9695 199.421 81.5452L216.155 101.626Z" fill="white"/>
+                        </svg>
+                    </a>
+                    <div class="border-t border-zinc-800 mx-2"></div>
+                    <a href="#" class="modal-trigger flex items-center justify-between p-3 hover:bg-zinc-800 rounded-md transition-colors opacity-50 cursor-not-allowed">
+                        <div>
+                            <p class="font-accent">rakcheev.me</p>
+                            <p class="text-sm text-secondary">личный сайт</p>
+                        </div>
+                        <svg width="32" height="32" viewBox="0 0 291 291" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-8 h-auto">
+                            <path d="M0 0V59.0314H156.944C165.39 59.0314 173.156 60.5557 180.24 63.6043C187.324 66.6529 192.91 70.9486 196.997 76.4914C201.357 82.0343 203.537 88.8243 203.537 96.8614C203.537 104.899 201.357 111.966 196.997 118.063C192.91 123.883 187.324 128.456 180.24 131.781C173.428 135.107 165.935 136.77 157.761 136.77H66.9827V190.813H135.89L210.076 291H291L210.567 182.869C214.023 181.529 217.402 180.02 220.702 178.341C237.051 169.75 249.993 158.11 259.53 143.421C269.066 128.456 273.834 111.689 273.834 93.12C273.834 74.2743 269.611 57.9229 261.164 44.0657C252.718 29.9314 240.456 19.1229 224.381 11.64C208.305 3.88 188.823 0 165.935 0H0Z" fill="white"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Scroll to top button -->
+                <button id="scroll-to-top" class="hidden bg-element p-2 rounded-full transition-opacity duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                </button>
+
+                <!-- Menu -->
+                <div class="relative">
+                    <button id="menu-button" class="bg-element p-2 rounded-full">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <!-- Menu Dropdown -->
+                    <div id="menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-72 bg-element rounded-lg p-2 space-y-2">
+                        <a href="#projects-section" class="flex items-center justify-between p-3 hover:bg-zinc-800 rounded-md transition-colors">
+                            <p class="font-accent">Проекты</p>
+                            <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </a>
+                        <a href="#" class="modal-trigger flex items-center justify-between p-3 hover:bg-zinc-800 rounded-md transition-colors">
+                            <p class="font-accent">Блог</p>
+                            <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <!-- HERO SECTION -->
+        <section class="text-center py-12 px-4">
+            <div class="flex justify-center mb-8">
+                <svg width="120" height="auto" viewBox="0 0 230 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 125H34.7971L88.7033 0H53.5206L0 125Z" fill="white"/>
+                    <path d="M104.219 62.5C104.219 47.693 109.4 34.0887 118.059 23.3799L134.793 43.4613C131.461 49.0356 129.548 55.5457 129.548 62.5C129.548 83.116 146.365 99.8286 167.109 99.8286C171.605 99.8286 175.917 99.0436 179.912 97.6041L196.65 117.69C187.843 122.356 177.787 125 167.109 125C132.376 125 104.219 97.0178 104.219 62.5Z" fill="white"/>
+                    <path d="M216.155 101.626C224.817 90.9161 230 77.3096 230 62.5C230 27.9822 201.843 0 167.109 0C156.429 0 146.371 2.64567 137.562 7.31352L154.299 27.3985C158.297 25.9573 162.611 25.1714 167.109 25.1714C187.854 25.1714 204.671 41.884 204.671 62.5C204.671 69.457 202.756 75.9695 199.421 81.5452L216.155 101.626Z" fill="white"/>
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-accent mb-4">Все проекты - здесь</h1>
+            <p class="max-w-xl mx-auto text-secondary">Начните изучение с этой страницы. Ниже показаны последние новинки и статьи.</p>
+        </section>
+
+        <!-- CAROUSEL SECTION -->
+        <section class="py-8 w-full">
+            <div class="swiper main-carousel">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <div class="relative rounded-xl overflow-hidden aspect-[4/3] max-w-lg mx-auto">
+                            <img src="https://i.postimg.cc/gJjWBvKL/Pic.png" alt="Изображение проекта 1" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 text-center">
+                                <h3 class="font-accent text-xl mb-2">Запуск сайта rakcheev.tech</h3>
+                                <p class="text-secondary text-sm">Добро пожаловать!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <div class="relative rounded-xl overflow-hidden aspect-[4/3] max-w-lg mx-auto">
+                            <img src="https://i.postimg.cc/gJjWBvKL/Pic.png" alt="Изображение проекта 2" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 text-center">
+                                <h3 class="font-accent text-xl mb-2">neonvivv.ai</h3>
+                                <p class="text-secondary text-sm">Попробуйте ассистента в Telegram.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <div class="relative rounded-xl overflow-hidden aspect-[4/3] max-w-lg mx-auto">
+                            <img src="https://i.postimg.cc/gJjWBvKL/Pic.png" alt="Изображение проекта 3" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 text-center">
+                                <h3 class="font-accent text-xl mb-2">neonvivv.ai persona</h3>
+                                <p class="text-secondary text-sm">Ваш личный помощник в общении с клиентами.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide">
+                        <div class="relative rounded-xl overflow-hidden aspect-[4/3] max-w-lg mx-auto">
+                            <img src="https://i.postimg.cc/gJjWBvKL/Pic.png" alt="Изображение проекта 4" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 text-center">
+                                <h3 class="font-accent text-xl mb-2">Peach XS</h3>
+                                <p class="text-secondary text-sm">сверхбыстрая и маленькая LM модель</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="swiper-slide">
+                        <div class="relative rounded-xl overflow-hidden aspect-[4/3] max-w-lg mx-auto">
+                            <img src="https://i.postimg.cc/gJjWBvKL/Pic.png" alt="Изображение проекта 5" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 text-center">
+                                <h3 class="font-accent text-xl mb-2">Новый проект</h3>
+                                <p class="text-secondary text-sm">Скоро здесь будет что-то интересное.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination mt-8 !relative"></div>
+            </div>
+        </section>
+
+        <!-- INTRO SECTION -->
+        <section class="container mx-auto px-4 py-12 space-y-6 max-w-3xl">
+            <h2 class="text-3xl font-accent">Rakcheev.tech -</h2>
+            <p class="text-2xl text-secondary">Точка входа в витрину различных AI проектов.</p>
+            <p class="text-secondary">Здесь я выкладываю и рассказываю о своих разработках, от программ до собственных ИИ ассистентов.</p>
+            <p class="text-secondary">За ходом выполнения помимо этого сайта вы можете отслеживать мой GitHub.</p>
+            <a href="#" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.postimg.cc/gJjWBvKL/Pic.png" alt="Аватар Pavel Rakcheev" class="w-8 h-8 rounded-full object-cover">
+                    <span class="font-accent">Pavel Rakcheev</span>
+                </div>
+            </a>
+        </section>
+
+        <div class="container mx-auto px-4"><div class="border-t border-zinc-800"></div></div>
+
+        <!-- PROJECTS SECTION -->
+        <section id="projects-section" class="container mx-auto px-4 py-12 space-y-12 max-w-3xl">
+            <div class="text-left">
+                <h2 class="text-3xl font-accent mb-2">Проекты которые можно уже попробовать</h2>
+                <p class="text-secondary">Вот несколько из них</p>
+            </div>
+
+            <!-- Project 1: neonvivv.ai -->
+            <div class="space-y-6">
+                <div class="flex items-start justify-between gap-6">
+                    <div>
+                        <h3 class="text-2xl font-accent">neonvivv.ai</h3>
+                        <p class="text-secondary">Основан на собственной языковой модели NVLM family.</p>
+                    </div>
+                    <div class="w-16 h-16 bg-element rounded-lg flex-shrink-0 flex items-center justify-center">
+                         <svg width="40" height="auto" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M53.4575 64.9695C39.4246 54.4375 33.913 42.4783 33.913 32.1267H0C0 78.9834 50.6113 116.968 113.043 116.968V83.0317C88.4556 83.0317 67.5008 75.5093 53.4575 64.9695Z" fill="white"/>
+                            <path d="M53.4575 135.031C39.4246 145.563 33.913 157.522 33.913 167.873H0C0 121.017 50.6113 83.0317 113.043 83.0317V116.968C88.4556 116.968 67.5008 124.491 53.4575 135.031Z" fill="white"/>
+                            <path d="M113.043 0H146.957V200H113.043V0Z" fill="white"/>
+                            <path d="M206.543 64.9695C220.575 54.4375 226.087 42.4783 226.087 32.1267H260C260 78.9834 209.389 116.968 146.957 116.968V83.0317C171.544 83.0317 192.499 75.5093 206.543 64.9695Z" fill="white"/>
+                            <path d="M206.543 135.031C220.575 145.563 226.087 157.522 226.087 167.873H260C260 121.017 209.389 83.0317 146.957 83.0317V116.968C171.544 116.968 192.499 124.491 206.543 135.031Z" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="space-y-4 text-secondary">
+                    <p>Быстрый ИИ ассистент для повседневных задач. Полностью бесплатный, работает без средств обхода блокировок.</p>
+                    <p>В данный момент neonvivv.ai на ранней стадии разработки. В ответах и действиях ИИ могут быть ошибки или неточности.</p>
+                </div>
+                <!-- Image Carousel for Project -->
+                <div class="swiper project-carousel rounded-lg overflow-hidden aspect-[4/3]">
+                     <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Image+1" class="w-full h-full object-cover" alt="Изображение проекта neonvivv.ai 1"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Image+2" class="w-full h-full object-cover" alt="Изображение проекта neonvivv.ai 2"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Image+3" class="w-full h-full object-cover" alt="Изображение проекта neonvivv.ai 3"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Image+4" class="w-full h-full object-cover" alt="Изображение проекта neonvivv.ai 4"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Image+5" class="w-full h-full object-cover" alt="Изображение проекта neonvivv.ai 5"></div>
+                    </div>
+                </div>
+                <p class="text-xs text-secondary">Пометка: Сейчас neonvivv.ai недоступен на сайте или приложении. Попробовать ассистента можно с помощью Telegram бота в мессенджере.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Подробнее</span> <span class="text-2xl">&rarr;</span></a>
+                    <a href="https://t.me/neonvivvai_bot" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Попробовать</span> <span class="text-2xl">&rarr;</span></a>
+                </div>
+            </div>
+            
+            <div class="border-t border-zinc-800"></div>
+
+            <!-- Project 2: neonvivv.ai persona -->
+            <div class="space-y-6 pt-12">
+                <div class="flex items-start justify-between gap-6">
+                    <div>
+                        <h3 class="text-2xl font-accent">neonvivv.ai persona</h3>
+                        <p class="text-secondary">Персональный ИИ ассистент для общения с пользователями.</p>
+                    </div>
+                    <div class="w-16 h-16 bg-element rounded-lg flex-shrink-0 flex items-center justify-center">
+                         <svg width="40" height="auto" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M53.4575 64.9695C39.4246 54.4375 33.913 42.4783 33.913 32.1267H0C0 78.9834 50.6113 116.968 113.043 116.968V83.0317C88.4556 83.0317 67.5008 75.5093 53.4575 64.9695Z" fill="white"/>
+                            <path d="M53.4575 135.031C39.4246 145.563 33.913 157.522 33.913 167.873H0C0 121.017 50.6113 83.0317 113.043 83.0317V116.968C88.4556 116.968 67.5008 124.491 53.4575 135.031Z" fill="white"/>
+                            <path d="M113.043 0H146.957V200H113.043V0Z" fill="white"/>
+                            <path d="M206.543 64.9695C220.575 54.4375 226.087 42.4783 226.087 32.1267H260C260 78.9834 209.389 116.968 146.957 116.968V83.0317C171.544 83.0317 192.499 75.5093 206.543 64.9695Z" fill="white"/>
+                            <path d="M206.543 135.031C220.575 145.563 226.087 157.522 226.087 167.873H260C260 121.017 209.389 83.0317 146.957 83.0317V116.968C171.544 116.968 192.499 124.491 206.543 135.031Z" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="space-y-4 text-secondary">
+                    <p>persona - личный помощник в общении с пользователями или клиентами во время вашего отсутствия в Telegram.</p>
+                    <p>ИИ анализирует контекст переписки и общается от вашего имени так, будто на связи лично вы. В конце переписки ассистент пришлет уведомление с кратким пересказом переписки.</p>
+                </div>
+                <!-- Image Carousel for Project -->
+                <div class="swiper project-carousel rounded-lg overflow-hidden aspect-[4/3]">
+                     <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Persona+1" class="w-full h-full object-cover" alt="Изображение проекта Persona 1"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Persona+2" class="w-full h-full object-cover" alt="Изображение проекта Persona 2"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Persona+3" class="w-full h-full object-cover" alt="Изображение проекта Persona 3"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Persona+4" class="w-full h-full object-cover" alt="Изображение проекта Persona 4"></div>
+                        <div class="swiper-slide"><img src="https://placehold.co/800x600/111111/FFFFFF?text=Persona+5" class="w-full h-full object-cover" alt="Изображение проекта Persona 5"></div>
+                    </div>
+                </div>
+                <p class="text-xs text-secondary">Пометка: persona доступна только Premium пользователям Telegram. Для его работы необходимо подключить его к своему личному профилю.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Подробнее</span> <span class="text-2xl">&rarr;</span></a>
+                    <a href="https://t.me/neonvivvai_persona_bot" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Попробовать</span> <span class="text-2xl">&rarr;</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- LINKS SECTION -->
+        <section class="container mx-auto px-4 py-12 space-y-8 max-w-3xl">
+            <div class="text-left">
+                <h2 class="text-3xl font-accent mb-2">В разделе проектов еще больше интересного!</h2>
+                <p class="text-secondary">Или можете исследовать другие страницы</p>
+            </div>
+            <div class="space-y-2">
+                <a href="#projects-section" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Перейти в раздел проектов</span> <span class="text-2xl">&rarr;</span></a>
+                <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Личный сайт rakcheev.me</span> <span class="text-2xl">&rarr;</span></a>
+                <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Брендбук и логотип rakcheev.tech</span> <span class="text-2xl">&rarr;</span></a>
+            </div>
+
+            <div class="border-t border-zinc-800"></div>
+
+            <div class="space-y-2">
+                <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Политика конфиденциальности</span> <span class="text-2xl">&rarr;</span></a>
+                <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Защита интелектульной собственности</span> <span class="text-2xl">&rarr;</span></a>
+                <a href="#" class="modal-trigger flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Сохранность персональных данных</span> <span class="text-2xl">&rarr;</span></a>
+            </div>
+
+            <div class="border-t border-zinc-800"></div>
+
+            <div class="space-y-2">
+                <a href="https://t.me/rakcheev_me" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Telegram канал</span> <span class="text-2xl">&rarr;</span></a>
+                <a href="https://github.com/neonvivv" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>GitHub</span> <span class="text-2xl">&rarr;</span></a>
+                <a href="mailto:me@neonvivv.ru" class="flex items-center justify-between p-4 bg-element rounded-lg w-full text-left hover:bg-zinc-800 transition-colors"><span>Связь со мной</span> <span class="text-2xl">&rarr;</span></a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="flex justify-between items-start">
+            <div>
+                <h3 class="text-lg font-accent mb-2">rakcheev.tech</h3>
+                <p class="text-sm text-secondary">&copy; 2025 Павел Ракчеев. Все права защищены.</p>
+                <div class="flex items-center gap-4 mt-4">
+                    <a href="https://t.me/rakcheev_me" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-white transition-colors" aria-label="Telegram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor"><g id="Artboard"><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M12,0C5.373,0,0,5.373,0,12s5.373,12,12,12s12-5.373,12-12S18.627,0,12,0z    M17.562,8.161c-0.18,1.897-0.962,6.502-1.359,8.627c-0.168,0.9-0.5,1.201-0.82,1.23c-0.697,0.064-1.226-0.461-1.901-0.903   c-1.056-0.692-1.653-1.123-2.678-1.799c-1.185-0.781-0.417-1.21,0.258-1.911c0.177-0.184,3.247-2.977,3.307-3.23   c0.007-0.032,0.015-0.15-0.056-0.212s-0.174-0.041-0.248-0.024c-0.106,0.024-1.793,1.139-5.062,3.345   c-0.479,0.329-0.913,0.489-1.302,0.481c-0.428-0.009-1.252-0.242-1.865-0.442c-0.751-0.244-1.349-0.374-1.297-0.788   c0.027-0.216,0.324-0.437,0.892-0.663c3.498-1.524,5.831-2.529,6.998-3.015c3.333-1.386,4.025-1.627,4.477-1.635   C17.472,7.214,17.608,7.681,17.562,8.161z"/></g></svg>
+                    </a>
+                    <a href="https://github.com/neonvivv" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-white transition-colors" aria-label="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M12,0.296c-6.627,0-12,5.372-12,12c0,5.302,3.438,9.8,8.206,11.387   c0.6,0.111,0.82-0.26,0.82-0.577c0-0.286-0.011-1.231-0.016-2.234c-3.338,0.726-4.043-1.416-4.043-1.416   C4.421,18.069,3.635,17.7,3.635,17.7c-1.089-0.745,0.082-0.729,0.082-0.729c1.205,0.085,1.839,1.237,1.839,1.237   c1.07,1.834,2.807,1.304,3.492,0.997C9.156,18.429,9.467,17.9,9.81,17.6c-2.665-0.303-5.467-1.332-5.467-5.93   c0-1.31,0.469-2.381,1.237-3.221C5.455,8.146,5.044,6.926,5.696,5.273c0,0,1.008-0.322,3.301,1.23   C9.954,6.237,10.98,6.104,12,6.099c1.02,0.005,2.047,0.138,3.006,0.404c2.29-1.553,3.297-1.23,3.297-1.23   c0.653,1.653,0.242,2.873,0.118,3.176c0.769,0.84,1.235,1.911,1.235,3.221c0,4.609-2.807,5.624-5.479,5.921   c0.43,0.372,0.814,1.103,0.814,2.222c0,1.606-0.014,2.898-0.014,3.293c0,0.319,0.216,0.694,0.824,0.576   c4.766-1.589,8.2-6.085,8.2-11.385C24,5.669,18.627,0.296,12,0.296z"/></g></svg>
+                    </a>
+                    <a href="https://instagram.com/rakcheev.me" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-white transition-colors" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor"><g><path d="M12,2.162c3.204,0,3.584,0.012,4.849,0.07c1.308,0.06,2.655,0.358,3.608,1.311c0.962,0.962,1.251,2.296,1.311,3.608   c0.058,1.265,0.07,1.645,0.07,4.849c0,3.204-0.012,3.584-0.07,4.849c-0.059,1.301-0.364,2.661-1.311,3.608   c-0.962,0.962-2.295,1.251-3.608,1.311c-1.265,0.058-1.645,0.07-4.849,0.07s-3.584-0.012-4.849-0.07   c-1.291-0.059-2.669-0.371-3.608-1.311c-0.957-0.957-1.251-2.304-1.311-3.608c-0.058-1.265-0.07-1.645-0.07-4.849   c0-3.204,0.012-3.584,0.07-4.849c0.059-1.296,0.367-2.664,1.311-3.608c0.96-0.96,2.299-1.251,3.608-1.311   C8.416,2.174,8.796,2.162,12,2.162 M12,0C8.741,0,8.332,0.014,7.052,0.072C5.197,0.157,3.355,0.673,2.014,2.014   C0.668,3.36,0.157,5.198,0.072,7.052C0.014,8.332,0,8.741,0,12c0,3.259,0.014,3.668,0.072,4.948c0.085,1.853,0.603,3.7,1.942,5.038   c1.345,1.345,3.186,1.857,5.038,1.942C8.332,23.986,8.741,24,12,24c3.259,0,3.668-0.014,4.948-0.072   c1.854-0.085,3.698-0.602,5.038-1.942c1.347-1.347,1.857-3.184,1.942-5.038C23.986,15.668,24,15.259,24,12   c0-3.259-0.014-3.668-0.072-4.948c-0.085-1.855-0.602-3.698-1.942-5.038c-1.343-1.343-3.189-1.858-5.038-1.942   C15.668,0.014,15.259,0,12,0z"/><path d="M12,5.838c-3.403,0-6.162,2.759-6.162,6.162c0,3.403,2.759,6.162,6.162,6.162s6.162-2.759,6.162-6.162   C18.162,8.597,15.403,5.838,12,5.838z M12,16c-2.209,0-4-1.791-4-4s1.791-4,4-4s4,1.791,4,4S14.209,16,12,16z"/><circle cx="18.406" cy="5.594" r="1.44"/></g></svg>
+                    </a>
+                    <a href="mailto:me@neonvivv.ru" class="text-secondary hover:text-white transition-colors" aria-label="Email">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor"><path d="M12,0A12.013,12.013,0,0,0,0,12c-.126,9.573,11.159,15.429,18.9,9.817a1,1,0,1,0-1.152-1.634C11.3,24.856,1.9,19.978,2,12,2.549-1.266,21.453-1.263,22,12v2a2,2,0,0,1-4,0V12C17.748,4.071,6.251,4.072,6,12a6.017,6.017,0,0,0,10.52,3.933A4,4,0,0,0,24,14V12A12.013,12.013,0,0,0,12,0Zm0,16a4,4,0,0,1,0-8A4,4,0,0,1,12,16Z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <svg width="120" height="auto" viewBox="0 0 230 125" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-24 h-auto">
+                    <path d="M0 125H34.7971L88.7033 0H53.5206L0 125Z" fill="white"/>
+                    <path d="M104.219 62.5C104.219 47.693 109.4 34.0887 118.059 23.3799L134.793 43.4613C131.461 49.0356 129.548 55.5457 129.548 62.5C129.548 83.116 146.365 99.8286 167.109 99.8286C171.605 99.8286 175.917 99.0436 179.912 97.6041L196.65 117.69C187.843 122.356 177.787 125 167.109 125C132.376 125 104.219 97.0178 104.219 62.5Z" fill="white"/>
+                    <path d="M216.155 101.626C224.817 90.9161 230 77.3096 230 62.5C230 27.9822 201.843 0 167.109 0C156.429 0 146.371 2.64567 137.562 7.31352L154.299 27.3985C158.297 25.9573 162.611 25.1714 167.109 25.1714C187.854 25.1714 204.671 41.884 204.671 62.5C204.671 69.457 202.756 75.9695 199.421 81.5452L216.155 101.626Z" fill="white"/>
+                </svg>
+            </div>
+        </div>
+        <div class="border-t border-zinc-800 my-6"></div>
+        <div class="text-left">
+            <a href="https://rakcheev.me" target="_blank" rel="noopener noreferrer" class="text-sm text-secondary hover:text-white transition-colors">Перейти на rakcheev.me</a>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-element rounded-lg p-6 max-w-sm w-full text-center space-y-4">
+            <h3 id="modal-title" class="text-lg font-accent">В данный момент это действие недоступно.</h3>
+            <p id="modal-text" class="text-secondary">Сайт временно не работает и недоступен для перехода.</p>
+            <button id="modal-close-button" class="bg-white text-black font-accent px-4 py-2 rounded-md hover:bg-zinc-200 transition-colors w-full">Закрыть окно</button>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('modal');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        
+        const openModal = () => {
+            modal.classList.remove('hidden');
+        };
+
+        const closeModal = () => {
+            modal.classList.add('hidden');
+        };
+
+        modalCloseButton.addEventListener('click', closeModal);
+
+        // Add event listeners to all modal triggers
+        document.querySelectorAll('.modal-trigger').forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+        });
+
+        // --- HEADER LOGIC ---
+        const siteSwitcherButton = document.getElementById('site-switcher-button');
+        const siteSwitcherDropdown = document.getElementById('site-switcher-dropdown');
+        const menuButton = document.getElementById('menu-button');
+        const menuDropdown = document.getElementById('menu-dropdown');
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+
+        // Function to toggle a dropdown
+        const toggleDropdown = (button, dropdown) => {
+            const isHidden = dropdown.classList.contains('hidden');
+            // Hide all dropdowns first
+            siteSwitcherDropdown.classList.add('hidden');
+            menuDropdown.classList.add('hidden');
+            // Reset arrow icons
+            siteSwitcherButton.querySelector('svg').classList.remove('rotate-180');
+            
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                if (button.id === 'site-switcher-button') {
+                    button.querySelector('svg').classList.add('rotate-180');
+                }
+            }
+        };
+
+        siteSwitcherButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleDropdown(siteSwitcherButton, siteSwitcherDropdown);
+        });
+
+        menuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleDropdown(menuButton, menuDropdown);
+        });
+
+        // Close dropdowns when clicking outside
+        window.addEventListener('click', () => {
+            siteSwitcherDropdown.classList.add('hidden');
+            menuDropdown.classList.add('hidden');
+            siteSwitcherButton.querySelector('svg').classList.remove('rotate-180');
+        });
+
+        // --- SCROLL-TO-TOP BUTTON LOGIC ---
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopButton.classList.remove('hidden');
+            } else {
+                scrollToTopButton.classList.add('hidden');
+            }
+        });
+
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // --- SWIPER CAROUSEL LOGIC ---
+        // Main articles carousel
+        const mainCarousel = new Swiper('.main-carousel', {
+            loop: true,
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 12,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 12
+                },
+                // when window width is >= 768px
+                768: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 12
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 3.5,
+                    spaceBetween: 12
+                }
+            }
+        });
+
+        // Project image carousels
+        const projectCarousels = new Swiper('.project-carousel', {
+            loop: true,
+            slidesPerView: 1.25,
+            spaceBetween: 12,
+            centeredSlides: true,
+             autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+        });
+    });
+    </script>
+</body>
+</html>
